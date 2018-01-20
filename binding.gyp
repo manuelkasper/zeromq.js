@@ -35,6 +35,14 @@
               'include_dirs': ['<(PRODUCT_DIR)/../../zmq/include'],
             }],
             ['OS=="openbsd" or OS=="freebsd"', {
+              'include_dirs': [
+                '<!@(pkg-config libzmq --cflags-only-I | sed s/-I//g)',
+                '/usr/local/include',
+              ],
+              'libraries': [
+                '<!@(pkg-config libzmq --libs)',
+                '-L/usr/local/lib',
+              ]
             }],
             ['OS=="linux"', {
               'libraries': ['<(PRODUCT_DIR)/../../zmq/lib/libzmq.a'],
